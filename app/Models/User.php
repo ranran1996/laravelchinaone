@@ -1,17 +1,21 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
+// 消息通知相关
 use Illuminate\Notifications\Notifiable;
+//邮件相关
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+//授权相关
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    //Notifiable 是消息通知相关功能引用
     use Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * 可分配的属性。
      *
      * @var array
      */
