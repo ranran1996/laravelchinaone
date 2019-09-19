@@ -28,6 +28,17 @@ class UsersController extends Controller
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|confirmed|min:6'
         ]);
-        return;
+
+        // 保存创建的用户信息，成功了会返回一个用户对象，并包含新注册用户的所有信息
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        //成功后的提示信息
+        session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
+        // 如果上一步成功了就重定向,[$user] = [$user->id]，相当于把用户信息全带过去，并直接跳转到/users/指定id地址
+        return redirect()->route('users.show', [$user]);
     }
 }

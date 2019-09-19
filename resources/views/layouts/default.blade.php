@@ -14,7 +14,11 @@
   <div class="container-fluid">
     <div class="row">
       <div class="offset-md-1 col-md-10">
+        {{-- 消息提示模块 --}}
+        @include('shared._messages')
+        {{-- 主要内容区域 --}}
         @yield('content')
+        {{-- 页脚 --}}
         @include('layouts._footer')
       </div>
     </div>
