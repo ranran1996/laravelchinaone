@@ -23,6 +23,14 @@
             <input type="password" name="password" class="form-control" value="{{ old('password') }}">
           </div>
 
+          {{-- 默认记住我，登陆状态有效期是5年，如果没有用记住我，则登陆状态有效期是2小时 --}}
+          <div class="form-group">
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="remember" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">记住我</label>
+              </div>
+          </div>
+
           <button type="submit" class="btn btn-primary">登录</button>
       </form>
 
