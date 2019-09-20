@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+// 认证功能
 use Auth;
 
 class SessionsController extends Controller
@@ -24,10 +25,20 @@ class SessionsController extends Controller
         // Auth::attempt() 方法可接收两个参数，第一个参数为需要进行用户身份认证的数组，第二个参数为是否为用户开启『记住我』功能的布尔值，true表示开启，false表示不开启
         if (Auth::attempt($credentials, $request->has('remember'))) {
             // 登陆成功相关操作
-            session()->flash('success', '欢迎回来！');
+            // session()->flash('success', '欢迎回来！');
             // Auth::user() 获取当前登陆用户的信息,相当于把用户信息全带过去，并直接跳转到/users/指定id地址
             // dd(Auth::user());
-            return redirect()->route('users.show', [Auth::user()]);
+            // return redirect()->route('users.show', [Auth::user()]);
+            // 用户激活功能
+            if (Auth::user()->activated) {
+                session()->flash('success', '欢迎回来！');
+                $fallback = route('users.show', Auth::user());
+                return redirect()->intended($fallback);
+            } else {
+                Auth::logout();
+                session()->flash('warning', '你的账号未激活，请检查邮箱中的注册邮件进行激活。');
+                return redirect('/');
+            }
         } else {
             // 登陆失败相关操作
             session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
@@ -46,4 +57,6 @@ class SessionsController extends Controller
 
         return redirect('login');
     }
+
+    //
 }
