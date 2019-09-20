@@ -59,4 +59,11 @@ class User extends Authenticatable
             $user->activation_token = Str::random(10);
         });
     }
+
+    // 定义一对多关联，一对多一般方法用复数形式比较好
+    public function statuses()
+    {
+        // 关联的表是status
+        return $this->hasMany(Status::class);
+    }
 }
