@@ -61,6 +61,7 @@ class User extends Authenticatable
     }
 
     // 定义一对多关联，一对多一般方法用复数形式比较好
+    // 一个用户对应可以发布多个微博
     public function statuses()
     {
         // 关联的表是status

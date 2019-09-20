@@ -30,7 +30,12 @@ class UsersController extends Controller
     // 如果数据库中找不到对应的模型实例，会自动生成 HTTP 404 响应
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        // 发布过的微博信息
+        $statuses = $user->statuses()
+            ->orderBy('created_at', 'desc') //按时间倒叙排序，新发布的显示在最上面,必须对created_at增加index索引才用
+            ->paginate(10);   //每页最多10条
+        return view('users.show', compact('user', 'statuses'));
+        // return view('users.show', compact('user'));
     }
 
     public function store(Request $request)
