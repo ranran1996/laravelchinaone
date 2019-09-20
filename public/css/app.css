@@ -10707,3 +10707,11 @@ section.user_info h1 {
   border-radius: 50%;
 }
 
+/* 重置密码样式 */
+
+.alert-status {
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+  color: #3c763d;
+}
+
