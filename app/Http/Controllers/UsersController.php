@@ -35,7 +35,8 @@ class UsersController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
-
+        // 让已经通过认证的用户，自动登陆的功能
+        Auth::login($user);
         //成功后的提示信息
         session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
         // 如果上一步成功了就重定向,[$user] = [$user->id]，相当于把用户信息全带过去，并直接跳转到/users/指定id地址
