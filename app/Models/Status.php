@@ -8,6 +8,9 @@ class Status extends Model
 {
     //微博表
 
+    // 允许插入的字段
+    protected $fillable = ['content'];
+
     // 一个微博对应一个用户
     public function user()
     {
