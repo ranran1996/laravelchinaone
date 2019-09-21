@@ -64,8 +64,12 @@ class User extends Authenticatable
     // 一个用户对应可以发布多个微博
     public function statuses()
     {
-        // 关联的表是status
+        // 关联的表是status,默认第二个参数就是这个本控制器名ser加上_id为外键，就是user_id，如果在xxx模型中定义关联
+        // 就是第二个默认值就是xxx_id了
         return $this->hasMany(Status::class);
+        // 当然你也可以自己写清楚外键，不用默认外键
+        // foreign_key 是指App\Comment模型中的外键user_id，local_key是指User模型的主键值,默认是id,如果user模型主键字段不是id，就需要自己定义了
+        // return $this->hasMany('App\Comment', 'foreign_key', 'local_key');
     }
 
     // 获取当前登陆用户的发布的所有微博

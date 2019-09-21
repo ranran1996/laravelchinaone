@@ -20,7 +20,6 @@ class StatusesController extends Controller
         $this->validate($request, [
             'content' => 'required|max:140'
         ]);
-
         // Auth::user() 用于获取当前登录的用户，可以保证创建的微博和用户一一对应
         Auth::user()->statuses()->create([
             'content' => $request['content']
