@@ -78,4 +78,40 @@ class User extends Authenticatable
         return $this->statuses()
             ->orderBy('created_at', 'desc');
     }
+
+    // 我的粉丝模型表，多对对，因为关注和粉丝都是用一个用户表，所以是自己关联自己，默认关系表名称是user_user，索引要指定第二个参数修改默认表名，用自己定义的表名followers做关系表
+    public function followers()
+    {
+        return $this->belongsToMany(User::Class, 'followers', 'user_id', 'follower_id');
+    }
+
+    // 我的关注模型表，反向多对多
+    public function followings()
+    {
+        return $this->belongsToMany(User::Class, 'followers', 'follower_id', 'user_id');
+    }
+
+    // 关注逻辑
+    public function follow($user_ids)
+    {
+        if (!is_array($user_ids)) {
+            $user_ids = compact('user_ids');
+        }
+        $this->followings()->sync($user_ids, false);
+    }
+
+    // 取消关注逻辑
+    public function unfollow($user_ids)
+    {
+        if (!is_array($user_ids)) {
+            $user_ids = compact('user_ids');
+        }
+        $this->followings()->detach($user_ids);
+    }
+
+    // 判断当前登陆用户，是否关注了某个用户
+    public function isFollowing($user_id)
+    {
+        return $this->followings->contains($user_id);
+    }
 }
