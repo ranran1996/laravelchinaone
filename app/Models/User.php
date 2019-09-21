@@ -75,7 +75,11 @@ class User extends Authenticatable
     // 获取当前登陆用户的发布的所有微博
     public function feed()
     {
-        return $this->statuses()
+        $user_ids = $this->followings->pluck('id')->toArray();
+        array_push($user_ids, $this->id);
+        // 同目录下不要要use 引用，可以直接使用Status模型
+        return Status::whereIn('user_id', $user_ids)
+            ->with('user')
             ->orderBy('created_at', 'desc');
     }
 
